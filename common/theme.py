@@ -17,7 +17,8 @@ _CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap');
 
-html, body, [class*="st-"], .stMarkdown, .stChatMessage {
+/* Text only: a broad selector here would also replace Streamlit's icon font. */
+.stMarkdown p, .stMarkdown li, .er-panel, .er-subtitle, .er-escape, [data-testid="stChatInputTextArea"] {
     font-family: 'Source Serif 4', Georgia, serif;
 }
 h1, h2, h3, .er-title {
