@@ -147,6 +147,11 @@ def parse_with_rules(raw_text: str, alias_table) -> dict:
     if items and (objects or has(("use",))) and has(USE_WORDS):
         # "use the key on the painting", "read the plate with the magnifying glass"
         return make_action("use", raw_text, item=items[0], target=objects[0] if objects else None)
+    if not items and _contains_word(text, "use") >= 0:
+        # "use the crowbar on the door": the item does not exist in this room
+        noun = _unknown_noun(text, ("use",))
+        noun = re.split(r"\b(on|with|in|at)\b", noun or "")[0].strip() or None
+        return make_action("use", raw_text, target=objects[0] if objects else None, unknown_name=noun)
     if objects and has(TAKE_WORDS) and not has(EXAMINE_WORDS):
         return make_action("take", raw_text, target=objects[0])
     if objects and has(OPEN_WORDS):
