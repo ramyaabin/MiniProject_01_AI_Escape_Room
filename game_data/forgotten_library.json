@@ -41,7 +41,7 @@
     },
     "painting": {
       "name": "mysterious painting",
-      "aliases": ["mysterious painting", "painting", "portrait", "picture", "canvas", "frame"],
+      "aliases": ["mysterious painting", "painting", "portrait", "picture", "canvas", "frame", "keyhole"],
       "visible_at_start": true,
       "description": "A self-portrait of Elias Thorne holding a lit candle. His eyes seem to follow you. In the bottom corner the paint reads 'E. Thorne, 1852'. At the base of the gilded frame you notice a tiny brass keyhole.",
       "description_unlocked": "The portrait now hangs open on hidden hinges, revealing a shallow alcove in the wall behind it.",
