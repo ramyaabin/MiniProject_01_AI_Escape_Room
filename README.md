@@ -168,11 +168,7 @@ notepad .env
 Replace `your-gemini-api-key-here` with your key and save. `.env` is listed in `.gitignore`,
 so it is never committed.
 
-| Variable | Default | Meaning |
-|---|---|---|
-| `GEMINI_API_KEY` | (required for AI features) | Your Gemini API key |
-| `GEMINI_MODEL` | `gemini-3.5-flash-lite` | Any Gemini text model on your tier |
-| `GEMINI_TIMEOUT_SECONDS` | `30` | Request timeout |
+
 
 ## Running
 
@@ -236,22 +232,8 @@ All screenshots are of the actual running application.
 | ![V2 escaped](screenshots/v2_04_escaped.png) Version 2 escape confirmed by the engine | ![V2 offline](screenshots/v2_offline_builtin_narration.png) Version 2 running without an API key |
 | ![V2 click to play](screenshots/v2_05_click_to_play.png) Version 2 played by clicking (hovering the magnifying glass in the open drawer) | |
 
-## Documentation
 
-- [docs/architecture_v1.md](docs/architecture_v1.md), [docs/architecture_v2.md](docs/architecture_v2.md): architecture diagrams
-- [docs/testing.md](docs/testing.md): test cases, Version 1 vs Version 2 results
-- [docs/study_guide.md](docs/study_guide.md): component explanations, viva questions, demo script
 
-## Limitations and future improvements
 
-- The Version 2 parser understands a fixed set of verbs. Unusual sentences need the Gemini
-  fallback or are answered with suggestions.
-- The narration guard catches leaked codes and false victories, not every possible inaccurate sentence.
-- One room. Game state lives in the browser session and is lost on refresh.
-- The free tier has request limits, so heavy use can hit rate limits. Version 2 then falls back to built-in text.
-- Possible next steps: Gemini function calling for parsing, saving state to disk, more rooms
-  from JSON, and an LLM-as-judge check of the narration.
 
-## License
 
-MIT - see [LICENSE](LICENSE).
