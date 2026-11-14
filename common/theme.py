@@ -6,6 +6,7 @@ for typography and a few reusable HTML blocks (header, panels, escape screen).
 
 from __future__ import annotations
 
+import base64
 import html
 
 import streamlit as st
@@ -112,6 +113,20 @@ def progress_steps(steps: list[tuple[str, bool]]) -> str:
 
 def badge(text: str, kind: str = "") -> str:
     return f"<span class='er-badge {kind}'>{html.escape(text)}</span>"
+
+
+def room_picture(svg: str, alt: str = "Illustration of the library room") -> None:
+    """Show an SVG drawing as an image.
+
+    st.html dropped our inline SVG, so the SVG is embedded as a base64 data URI in an <img>
+    tag. Browsers always render that, and the drawing is fully self-contained.
+    """
+    encoded = base64.b64encode(svg.encode("utf-8")).decode("ascii")
+    st.markdown(
+        f"<img src='data:image/svg+xml;base64,{encoded}' alt='{html.escape(alt)}' "
+        "style='width:100%;height:auto;display:block;margin-bottom:0.3rem'>",
+        unsafe_allow_html=True,
+    )
 
 
 def escape_screen(headline: str, details: str) -> None:

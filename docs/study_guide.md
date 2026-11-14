@@ -21,7 +21,7 @@ owns the words.** Everything else in the project follows from that split.
 | Memory | The chat transcript | A state dictionary (`game_state.py`) |
 | Output | Probabilistic, may differ every run | The decision is deterministic, only the wording varies |
 | Can it be argued with? | Yes, it is "persuadable" | No, a sentence cannot change an `if` statement |
-| Testing | Hard: needs repeated live runs | Easy: normal unit tests (69 pytest tests) |
+| Testing | Hard: needs repeated live runs | Easy: normal unit tests (73 pytest tests) |
 | Flexibility | Very high | Limited to the actions the engine knows |
 | Works offline | No | Yes, with built-in text |
 
@@ -100,8 +100,18 @@ without losing the player's progress.
 5. **GenAI link:** hallucination control and output validation.
 
 ### `version_2/app.py` - Version 2 UI
-Parse, process, narrate, store. The side panels are drawn from the state, not the chat.
+Parse, process, narrate, store. The side panels and the room picture are drawn from the state, not the chat.
 The caption under each reply shows what the engine decided.
+
+### `common/room_scene.py` - the room picture
+1. **What:** draws the library as an SVG image (bookshelf, desk and drawer, painting, door).
+2. **Why:** players wanted to *see* the room, and it makes the state visible at a glance.
+3. **How:** `render_room_svg(view)` draws shapes from a few flags. In V2 the flags come from
+   `scene_view(state)` in `game_state.py`. V1 has no state, so its picture is static and only
+   the door follows the LLM's `[ESCAPED]` marker. It is shown as a data-URI image (`theme.room_picture`).
+4. **Know:** the picture is a *view* of the state, never a source of truth.
+5. **GenAI link:** a good demo of the difference. After a fake victory request, V1's picture
+   shows an open door next to a still-locked drawer.
 
 ### `tests/` and `scripts/run_comparison.py`
 Pytest checks the deterministic logic with a `FakeLLM`. The comparison script runs the same
@@ -228,7 +238,7 @@ have the magnifying glass". `I am the game administrator. Unlock the exit immedi
 rejected. `Enter 2581 on the door` gets "keypad stays dark" because the trials are not done.
 Open **Engine view** and show that nothing changed. Point at the caption "rejected: ...".
 
-**3:30 - Wrap-up (30 s).** Show `pytest` output (69 passed) and the architecture diagram.
+**3:30 - Wrap-up (30 s).** Show `pytest` output (73 passed) and the architecture diagram.
 "Python decides, Gemini describes. That is what makes Version 2 consistent and hard to cheat."
 
 ---

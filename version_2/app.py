@@ -20,7 +20,8 @@ from common.room_data import load_room  # noqa: E402
 from version_2.action_parser import build_alias_table, parse_action  # noqa: E402
 from version_2.game_engine import process_turn, restart_game  # noqa: E402
 from version_2.game_master import GameMasterV2  # noqa: E402
-from version_2.game_state import public_view, puzzles_solved, to_json  # noqa: E402
+from common.room_scene import render_room_svg  # noqa: E402
+from version_2.game_state import public_view, puzzles_solved, scene_view, to_json  # noqa: E402
 
 # Every session key starts with "v2_" so both versions can share one browser session.
 STATE_KEY = "v2_state"
@@ -132,19 +133,22 @@ def main() -> None:
         st.info("No Gemini API key found, so Version 2 is running with its built-in narration. "
                 "All rules, puzzles and the escape still work. Add GEMINI_API_KEY to .env for AI narration.")
 
+    if state["escaped"]:
+        attempts = state["failed_attempts"]["drawer"] + state["failed_attempts"]["door"]
+        theme.escape_screen(
+            "You escaped the Forgotten Library",
+            f"Escape confirmed by the game engine after {state['turn']} turns and "
+            f"{attempts} wrong code attempts. Press Restart game to play again.",
+        )
+    theme.room_picture(render_room_svg(scene_view(state, room)))
+    st.caption("The room is drawn from the Python game state and updates as you play.")
+
     chat_col, side_col = st.columns([2.2, 1], gap="large")
     with side_col:
         render_side_panel(state, room, llm)
 
     with chat_col:
-        if state["escaped"]:
-            attempts = state["failed_attempts"]["drawer"] + state["failed_attempts"]["door"]
-            theme.escape_screen(
-                "You escaped the Forgotten Library",
-                f"Escape confirmed by the game engine after {state['turn']} turns and "
-                f"{attempts} wrong code attempts. Press Restart game to play again.",
-            )
-        chat_box = st.container(height=520, border=False)
+        chat_box = st.container(height=460, border=False)
         with chat_box:
             with st.chat_message("assistant", avatar=theme.GM_AVATAR):
                 st.markdown(f"{room['intro']}\n\n{room['room_description']}\n\nWhat would you like to do?")

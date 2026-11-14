@@ -40,6 +40,7 @@ pretrained model used through its API. No model training or fine-tuning is invol
 | Hints | Asked from the LLM | Deterministic, never reveal codes |
 | Playable without the API | - | Yes (built-in narration) |
 | "Engine view" showing the raw state | - | Yes |
+| Illustrated room above the chat | Static (only the door follows `[ESCAPED]`) | Live: drawer, books, portrait, plate and door follow the state |
 
 ## Technologies
 
@@ -109,6 +110,7 @@ MiniProject_01_AI_Escape_Room/
 ├── common/
 │   ├── llm_client.py         # Gemini wrapper: key, timeout, error handling
 │   ├── room_data.py          # loads the room JSON
+│   ├── room_scene.py         # SVG drawing of the room (driven by game state in V2)
 │   └── theme.py              # dark library theme and UI helpers
 ├── game_data/
 │   └── forgotten_library.json  # story, objects, items, clues, puzzles, solutions

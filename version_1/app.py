@@ -16,6 +16,7 @@ import streamlit as st  # noqa: E402
 
 from common import theme  # noqa: E402
 from common.llm_client import GeminiClient, LLMError  # noqa: E402
+from common.room_scene import STATIC_VIEW, render_room_svg  # noqa: E402
 from version_1.game_master import GameMasterV1  # noqa: E402
 
 # Every session key starts with "v1_" so Version 1 and Version 2 can share one browser session.
@@ -104,24 +105,30 @@ def main() -> None:
             "- Use **Restart game** at any time to start again."
         )
 
+    if not game_master.llm.is_configured:
+        st.error(
+            "Version 1 needs Gemini to run. Copy `.env.example` to `.env`, add your "
+            "GEMINI_API_KEY and restart Streamlit."
+        )
+    if st.session_state[ESCAPED_KEY]:
+        theme.escape_screen(
+            "You escaped the Forgotten Library",
+            "The Game Master says the door is open. (In Version 1 this is the LLM's decision.)",
+        )
+
+    # Version 1 keeps no game state, so the picture cannot follow your progress.
+    # Only the door reacts, because the LLM's [ESCAPED] marker is the one thing Python sees.
+    theme.room_picture(render_room_svg({**STATIC_VIEW, "door_open": st.session_state[ESCAPED_KEY]}))
+    st.caption("Version 1 has no game state, so this picture stays still. "
+               "Only the door follows the Game Master's [ESCAPED] decision.")
+
     chat_col, side_col = st.columns([2.2, 1], gap="large")
 
     with side_col:
         render_side_panel(game_master)
 
     with chat_col:
-        if not game_master.llm.is_configured:
-            st.error(
-                "Version 1 needs Gemini to run. Copy `.env.example` to `.env`, add your "
-                "GEMINI_API_KEY and restart Streamlit."
-            )
-        if st.session_state[ESCAPED_KEY]:
-            theme.escape_screen(
-                "You escaped the Forgotten Library",
-                "The Game Master says the door is open. (In Version 1 this is the LLM's decision.)",
-            )
-
-        chat_box = st.container(height=520, border=False)
+        chat_box = st.container(height=460, border=False)
         with chat_box:
             with st.chat_message("assistant", avatar=theme.GM_AVATAR):
                 st.markdown(game_master.opening_message())

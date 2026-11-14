@@ -78,5 +78,32 @@ def public_view(state: dict, room: dict) -> dict:
     }
 
 
+SCENE_AREAS = {
+    "bookshelf": "bookshelf", "crimson_books": "bookshelf",
+    "desk": "desk", "journal": "desk", "drawer": "desk", "lamp": "desk",
+    "painting": "painting", "alcove": "painting", "brass_plate": "painting",
+    "door": "door",
+}
+
+
+def scene_view(state: dict, room: dict) -> dict:
+    """Flags for the room illustration (common/room_scene.py), taken only from the state."""
+    drawer_open = not state["drawer_locked"]
+    items_in_drawer = [
+        item_id for item_id, item in room["items"].items()
+        if item["location"] == "drawer" and item_id not in state["taken_items"]
+    ]
+    return {
+        "crimson_found": "crimson_books" in state["visible_objects"],
+        "drawer_open": drawer_open,
+        "drawer_items": items_in_drawer if drawer_open else [],
+        "painting_open": state["painting_unlocked"],
+        "plate_read": state["puzzles"]["tiny_inscription"],
+        "keypad_active": all_puzzles_solved(state),
+        "door_open": state["escaped"],
+        "highlight": SCENE_AREAS.get(state["last_target"]),
+    }
+
+
 def to_json(state: dict) -> str:
     return json.dumps(state, indent=2)
