@@ -1,6 +1,6 @@
 # AI-Powered Escape Room: Development Report
 
-**Course:** Deep Learning - MiniProject 01 · **Date:** November 2026 ·
+**Author:** Ramya Mercy Rajan · **Course:** Deep Learning - MiniProject 01 · **Date:** November 2026 ·
 **Code:** <https://github.com/ramyaabin/MiniProject_01_AI_Escape_Room>
 
 ## 1. Introduction and objective
