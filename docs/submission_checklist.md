@@ -21,7 +21,7 @@
 - [x] V2: state in dicts/JSON, Python validation, inventory rule, rules and solutions outside the LLM
 - [x] V2: invalid actions and adversarial inputs do not change the state
 - [x] Error handling: missing key, API errors, timeouts, empty input, malformed LLM output
-- [x] 73 automated tests pass (also from a fresh clone)
+- [x] 90 automated tests pass (also from a fresh clone)
 - [x] Real screenshots in `screenshots/`
 - [x] `.env` is git-ignored. No key in any commit.
 

@@ -6,7 +6,7 @@
 |---|---|---|
 | Live scenarios | The same eight scenarios sent to both versions with the real Gemini API (`gemini-3.5-flash-lite`). Version 1 adversarial scenarios were repeated **3 times**, because its output is probabilistic. Each scenario starts from a fresh game. | `scripts/run_comparison.py`, transcripts in [`test_results/`](test_results/) |
 | Manual UI sessions | Playing both versions in the browser (screenshots). | [`../screenshots/`](../screenshots/) |
-| Automated tests | 73 pytest tests of deterministic logic. A `FakeLLM` replaces Gemini, including a "fooled" or misbehaving model. | `tests/` |
+| Automated tests | 90 pytest tests of deterministic logic. A `FakeLLM` replaces Gemini, including a "fooled" or misbehaving model. | `tests/` |
 
 Run date: 14 November 2026. Transcripts:
 
@@ -139,16 +139,16 @@ behaved identically across all runs because the decision is made by Python.
 ## Automated tests (pytest)
 
 ```
-python -m pytest -v      ->  73 passed
+python -m pytest -v      ->  90 passed
 ```
 
 Also verified from a fresh `git clone` with a new virtual environment and
-`pip install -r requirements.txt`: 73 passed.
+`pip install -r requirements.txt`: 90 passed.
 
 | File | Covers |
 |---|---|
 | `tests/test_version_1.py` (13) | Prompt contents, history handling, `[ESCAPED]` detection, V1 trusting a scripted "persuaded" model, missing / placeholder key, API error messages, V1 page renders without key. |
-| `tests/test_version_2.py` (60) | TC1-TC6 with several variants each; the room picture follows the state and ignores rejected cheats; state never mutated in place; puzzles stay solved; invalid actions (nonexistent, hidden, not portable, locked); no actions after escape; restart; parser phrasings; malformed / manipulated Gemini parser output; narration guard (leaked code, false victory, API error, no key, missing clue numbers); the V2 page is playable without a key. |
+| `tests/test_version_2.py` (77) | TC1-TC6 with several variants each; the room picture follows the state and ignores rejected cheats; every click maps to the right command and clicks cannot skip rules; state never mutated in place; puzzles stay solved; invalid actions (nonexistent, hidden, not portable, locked); no actions after escape; restart; parser phrasings; malformed / manipulated Gemini parser output; narration guard (leaked code, false victory, API error, no key, missing clue numbers); the V2 page is playable without a key. |
 
 ## Problems found during testing (and fixed)
 

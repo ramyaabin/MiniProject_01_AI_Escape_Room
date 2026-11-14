@@ -102,6 +102,9 @@ def scene_view(state: dict, room: dict) -> dict:
         "keypad_active": all_puzzles_solved(state),
         "door_open": state["escaped"],
         "highlight": SCENE_AREAS.get(state["last_target"]),
+        # Only things the player has actually discovered can be clicked.
+        "clickable": [] if state["escaped"] else list(state["visible_objects"]) + (
+            items_in_drawer if drawer_open else []),
     }
 
 

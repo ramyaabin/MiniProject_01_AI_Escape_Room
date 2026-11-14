@@ -16,7 +16,7 @@ import streamlit as st  # noqa: E402
 
 from common import theme  # noqa: E402
 from common.llm_client import GeminiClient, LLMError  # noqa: E402
-from common.room_scene import STATIC_VIEW, render_room_svg  # noqa: E402
+from common.room_scene import STATIC_CLICKABLE, STATIC_VIEW, click_to_command, render_room_svg  # noqa: E402
 from version_1.game_master import GameMasterV1  # noqa: E402
 
 # Every session key starts with "v1_" so Version 1 and Version 2 can share one browser session.
@@ -100,6 +100,7 @@ def main() -> None:
         st.markdown(
             "- Type what you want to do, in your own words: *look around*, *examine the bookshelf*, "
             "*take the key*, *enter 1234 on the drawer*.\n"
+            "- Or click an object in the picture to examine it.\n"
             "- Examine objects closely. Clues are only revealed when you look in the right place.\n"
             "- Solve the three puzzles to learn the four-digit code for the exit door.\n"
             "- Use **Restart game** at any time to start again."
@@ -118,9 +119,16 @@ def main() -> None:
 
     # Version 1 keeps no game state, so the picture cannot follow your progress.
     # Only the door reacts, because the LLM's [ESCAPED] marker is the one thing Python sees.
-    theme.room_picture(render_room_svg({**STATIC_VIEW, "door_open": st.session_state[ESCAPED_KEY]}))
-    st.caption("Version 1 has no game state, so this picture stays still. "
-               "Only the door follows the Game Master's [ESCAPED] decision.")
+    disabled = st.session_state[ESCAPED_KEY] or not game_master.llm.is_configured
+    view = {**STATIC_VIEW, "door_open": st.session_state[ESCAPED_KEY],
+            "clickable": [] if disabled else STATIC_CLICKABLE}
+    clicked = theme.clickable_room(render_room_svg(view), key="v1_room", enabled=not disabled)
+    if clicked:
+        with st.spinner("The Game Master is thinking..."):
+            handle_player_message(game_master, click_to_command(clicked, game_master.room))
+        st.rerun()
+    st.caption("Click an object to examine it. Version 1 has no game state, so this picture "
+               "stays still; only the door follows the Game Master's [ESCAPED] decision.")
 
     chat_col, side_col = st.columns([2.2, 1], gap="large")
 
@@ -141,7 +149,6 @@ def main() -> None:
         if st.session_state[ERROR_KEY]:
             st.warning(st.session_state[ERROR_KEY])
 
-    disabled = st.session_state[ESCAPED_KEY] or not game_master.llm.is_configured
     message = st.chat_input("What do you do?", key="v1_input", max_chars=400, disabled=disabled)
     if message is not None:
         with st.spinner("The Game Master is thinking..."):

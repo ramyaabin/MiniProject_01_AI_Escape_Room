@@ -20,13 +20,14 @@ from common.room_data import load_room  # noqa: E402
 from version_2.action_parser import build_alias_table, parse_action  # noqa: E402
 from version_2.game_engine import process_turn, restart_game  # noqa: E402
 from version_2.game_master import GameMasterV2  # noqa: E402
-from common.room_scene import render_room_svg  # noqa: E402
+from common.room_scene import click_to_command, render_room_svg  # noqa: E402
 from version_2.game_state import public_view, puzzles_solved, scene_view, to_json  # noqa: E402
 
 # Every session key starts with "v2_" so both versions can share one browser session.
 STATE_KEY = "v2_state"
 MESSAGES_KEY = "v2_messages"
 NOTICE_KEY = "v2_notice"
+HELD_KEY = "v2_held_item"
 
 
 def get_services():
@@ -125,7 +126,9 @@ def main() -> None:
         st.markdown(
             "- Type actions in plain English: *look around*, *examine the bookshelf*, *read the journal*, "
             "*take the brass key*, *use the key on the painting*, *enter 1234 on the drawer*.\n"
-            "- Type *inventory* to see what you carry, or *hint* if you are stuck.\n"
+            "- Or **click the picture**: click an object to examine it, click an item in the open drawer "
+            "to take it, or select an item under the picture and then click where to use it.\n"
+            "- Type *inventory* to see what you carry, or *hint* if you are stuck. Codes are always typed.\n"
             "- Inventory, clues and puzzle progress on the right always show the real game state.\n"
             "- Use **Restart game** at any time to start again."
         )
@@ -140,8 +143,21 @@ def main() -> None:
             f"Escape confirmed by the game engine after {state['turn']} turns and "
             f"{attempts} wrong code attempts. Press Restart game to play again.",
         )
-    theme.room_picture(render_room_svg(scene_view(state, room)))
-    st.caption("The room is drawn from the Python game state and updates as you play.")
+    # The picture is drawn from the game state. A click becomes an ordinary text command,
+    # so it goes through the same parser and validator as typing.
+    clicked = theme.clickable_room(render_room_svg(scene_view(state, room)), key="v2_room",
+                                   enabled=not state["escaped"])
+    if clicked:
+        held_item = None if clicked in room["items"] else st.session_state.get(HELD_KEY)
+        with st.spinner("The Game Master is thinking..."):
+            handle_player_message(click_to_command(clicked, room, held_item))
+        st.session_state[HELD_KEY] = None  # a held item is used once, then put away
+        st.rerun()
+    if state["inventory"] and not state["escaped"]:
+        st.pills("Use an item: select it, then click where to use it", options=state["inventory"],
+                 format_func=lambda item_id: room["items"][item_id]["name"].capitalize(), key=HELD_KEY)
+    st.caption("Click an object to examine it, or an item in the open drawer to take it. "
+               "Codes are typed. The picture is drawn from the Python game state.")
 
     chat_col, side_col = st.columns([2.2, 1], gap="large")
     with side_col:

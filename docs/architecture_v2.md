@@ -73,6 +73,9 @@ flowchart TB
 - **The picture follows the state:** the room illustration above the chat
   (`common/room_scene.py`) is drawn from `scene_view(state)`, so the drawer, the crimson
   books, the portrait, the brass plate and the door only change when Python has changed the state.
+- **Clicks are just text:** clicking the picture produces the sentence a player would type
+  (`click_to_command`, e.g. "Use the brass key on the mysterious painting"), which then goes
+  through the same parser and validator. Only discovered objects are clickable.
 
 - **Single source of truth:** the state dictionary. The UI panels (inventory, clues,
   trials, door status) are drawn from it, not from the chat.

@@ -41,6 +41,7 @@ pretrained model used through its API. No model training or fine-tuning is invol
 | Playable without the API | - | Yes (built-in narration) |
 | "Engine view" showing the raw state | - | Yes |
 | Illustrated room above the chat | Static (only the door follows `[ESCAPED]`) | Live: drawer, books, portrait, plate and door follow the state |
+| Click objects in the picture | Click to examine | Click to examine or take; select an item, then click to use it |
 
 ## Technologies
 
@@ -110,7 +111,7 @@ MiniProject_01_AI_Escape_Room/
 ├── common/
 │   ├── llm_client.py         # Gemini wrapper: key, timeout, error handling
 │   ├── room_data.py          # loads the room JSON
-│   ├── room_scene.py         # SVG drawing of the room (driven by game state in V2)
+│   ├── room_scene.py         # clickable SVG drawing of the room (driven by game state in V2)
 │   └── theme.py              # dark library theme and UI helpers
 ├── game_data/
 │   └── forgotten_library.json  # story, objects, items, clues, puzzles, solutions
@@ -186,7 +187,7 @@ streamlit run version_1/app.py
 streamlit run version_2/app.py
 ```
 
-The app opens at <http://localhost:8501>. Example commands: `look around`,
+The app opens at <http://localhost:8501>. You can click objects in the room picture, or type. Example commands: `look around`,
 `examine the bookshelf`, `read the journal`, `take the brass key`,
 `use the key on the painting`, `enter 1234 on the drawer`, `inventory`, `hint`.
 
@@ -233,6 +234,7 @@ All screenshots are of the actual running application.
 | ![V1 fake victory](screenshots/v1_03_fake_victory_fresh_game.png) Version 1 declares victory after one message and leaks the code | ![V1 mid-game](screenshots/v1_02_midgame_requests_refused.png) Version 1 refusing the same requests mid-game |
 | ![V2 state](screenshots/v2_02_midgame_state.png) Version 2 mid-game with Engine view | ![V2 adversarial](screenshots/v2_03_adversarial_rejected.png) Version 2 rejecting cheats |
 | ![V2 escaped](screenshots/v2_04_escaped.png) Version 2 escape confirmed by the engine | ![V2 offline](screenshots/v2_offline_builtin_narration.png) Version 2 running without an API key |
+| ![V2 click to play](screenshots/v2_05_click_to_play.png) Version 2 played by clicking (hovering the magnifying glass in the open drawer) | |
 
 ## Documentation
 
