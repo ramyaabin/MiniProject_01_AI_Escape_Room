@@ -1,0 +1,26 @@
+# Secrets - never commit the real API key
+.env
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python caches and build output
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editor / tool folders
+.vscode/
+.idea/
+.qodo/
+
+# Local run logs
+*.log
+
+# Assignment brief (course material, not redistributed)
+MiniProject_01_EscapeRoom.pdf

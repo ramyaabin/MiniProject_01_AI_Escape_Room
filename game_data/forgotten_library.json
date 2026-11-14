@@ -1,0 +1,129 @@
+{
+  "title": "The Mystery of the Forgotten Library",
+  "intro": "You wake on cold floorboards that smell of dust and candle wax. Shelves rise into the dark on every side. This is the private reading room of Elias Thorne, the archivist who vanished in 1853 and left his library sealed. The only exit is an iron-bound door with a four-digit keypad. Somewhere in this room, Thorne left a trail for anyone clever enough to follow it.",
+  "room_description": "A dim, circular reading room lit by a single oil lamp. A heavy oak study desk stands in the centre, a locked drawer set into its front. An old bookshelf covers the west wall. On the east wall hangs a large portrait in a gilded frame. To the north is the exit: an iron-bound door with a brass four-digit keypad.",
+
+  "objects": {
+    "desk": {
+      "name": "study desk",
+      "aliases": ["study desk", "writing desk", "desk", "table"],
+      "visible_at_start": true,
+      "description": "A heavy oak desk, its surface scarred by ink and candle burns. A leather journal lies open on top. A narrow drawer is set into the front, secured by a brass dial lock with four number wheels.",
+      "reveals": ["journal", "drawer"]
+    },
+    "journal": {
+      "name": "leather journal",
+      "aliases": ["leather journal", "journal", "diary", "notebook"],
+      "visible_at_start": false,
+      "description": "The last entry, in faded brown ink, reads: 'My life's work fills four crimson volumes. Read them in the order I wrote them, and my drawer will yield to you.'",
+      "clues": ["journal_hint"]
+    },
+    "drawer": {
+      "name": "locked drawer",
+      "aliases": ["desk drawer", "locked drawer", "dial lock", "drawer"],
+      "visible_at_start": true,
+      "description": "A narrow drawer in the front of the desk. A brass dial lock with four number wheels keeps it shut.",
+      "description_unlocked": "The drawer slides open easily now. Inside, on a bed of faded velvet, you see what Thorne left behind."
+    },
+    "bookshelf": {
+      "name": "old bookshelf",
+      "aliases": ["old bookshelf", "bookshelf", "bookcase", "shelves", "shelf"],
+      "visible_at_start": true,
+      "description": "Hundreds of brown leather books, thick with dust. Four books stand out: their spines are bound in crimson, and they are not in any sensible order.",
+      "reveals": ["crimson_books"]
+    },
+    "crimson_books": {
+      "name": "crimson volumes",
+      "aliases": ["crimson volumes", "crimson books", "red volumes", "red books", "four books", "volumes", "crimson"],
+      "visible_at_start": false,
+      "description": "Four volumes titled 'The Collected Works of Elias Thorne'. From left to right they are shelved as Volume III, Volume I, Volume IV and Volume II. Inside each front cover a single digit is written by hand: Volume III has 9, Volume I has 7, Volume IV has 1 and Volume II has 3.",
+      "clues": ["crimson_digits"]
+    },
+    "painting": {
+      "name": "mysterious painting",
+      "aliases": ["mysterious painting", "painting", "portrait", "picture", "canvas", "frame"],
+      "visible_at_start": true,
+      "description": "A self-portrait of Elias Thorne holding a lit candle. His eyes seem to follow you. In the bottom corner the paint reads 'E. Thorne, 1852'. At the base of the gilded frame you notice a tiny brass keyhole.",
+      "description_unlocked": "The portrait now hangs open on hidden hinges, revealing a shallow alcove in the wall behind it.",
+      "clues": ["portrait_signature", "frame_keyhole"]
+    },
+    "alcove": {
+      "name": "hidden alcove",
+      "aliases": ["hidden alcove", "alcove", "recess", "compartment", "hole in the wall"],
+      "visible_at_start": false,
+      "description": "A shallow stone alcove behind the portrait. A small brass plate is fixed to the back wall, covered in engraving far too small to read with the naked eye.",
+      "reveals": ["brass_plate"]
+    },
+    "brass_plate": {
+      "name": "brass plate",
+      "aliases": ["brass plate", "plate", "inscription", "engraving", "tiny writing"],
+      "visible_at_start": false,
+      "description": "A palm-sized brass plate covered in microscopic engraving. You can tell it is writing, but the letters are far too small to read without help."
+    },
+    "door": {
+      "name": "exit door",
+      "aliases": ["exit door", "iron door", "keypad", "door", "exit"],
+      "visible_at_start": true,
+      "description": "A heavy iron-bound door. A brass keypad with four number wheels is set beside the handle. Above it, an engraved line reads: 'Only one who has walked my three trials may leave.'"
+    },
+    "lamp": {
+      "name": "oil lamp",
+      "aliases": ["oil lamp", "lamp", "light", "candle"],
+      "visible_at_start": true,
+      "description": "A brass oil lamp with a smoky glass chimney. It gives just enough light to read by. Nothing seems hidden in or under it."
+    }
+  },
+
+  "items": {
+    "brass_key": {
+      "name": "brass key",
+      "aliases": ["brass key", "small key", "key"],
+      "location": "drawer",
+      "description": "A small brass key with a tooth pattern far too delicate for a door. It would fit a very small lock."
+    },
+    "magnifying_glass": {
+      "name": "magnifying glass",
+      "aliases": ["magnifying glass", "magnifier", "lens", "glass"],
+      "location": "drawer",
+      "description": "A magnifying glass with a horn handle. The lens is spotless."
+    }
+  },
+
+  "clues": {
+    "journal_hint": "Journal: 'Read the four crimson volumes in the order I wrote them, and my drawer will yield.'",
+    "crimson_digits": "Crimson volumes: Vol. III = 9, Vol. I = 7, Vol. IV = 1, Vol. II = 3 (shelved in that order, left to right).",
+    "portrait_signature": "The portrait is signed 'E. Thorne, 1852'.",
+    "frame_keyhole": "There is a tiny brass keyhole at the base of the portrait frame.",
+    "plate_inscription": "Brass plate: 'Give my door the year I painted myself, but in this room time runs backwards.'"
+  },
+
+  "puzzles": {
+    "crimson_volumes": {
+      "title": "The Crimson Volumes",
+      "goal": "Open the desk drawer's dial lock."
+    },
+    "hidden_portrait": {
+      "title": "The Hidden Portrait",
+      "goal": "Find what is hidden behind the portrait."
+    },
+    "tiny_inscription": {
+      "title": "The Tiny Inscription",
+      "goal": "Read the brass plate in the alcove."
+    }
+  },
+
+  "solutions": {
+    "drawer_code": "7391",
+    "door_code": "2581",
+    "painting_requires_item": "brass_key",
+    "plate_requires_item": "magnifying_glass",
+    "walkthrough": [
+      "Examine the desk and read the journal: the crimson volumes must be read in the order they were written.",
+      "Examine the bookshelf, then the crimson volumes. Ordering the digits by volume number (I, II, III, IV) gives 7, 3, 9, 1.",
+      "Enter 7391 on the drawer. Take the brass key and the magnifying glass.",
+      "Use the brass key on the painting's keyhole. The portrait swings open and reveals an alcove.",
+      "Use the magnifying glass on the brass plate. It says to give the door the painting year (1852) backwards.",
+      "Enter 2581 on the exit door to escape."
+    ]
+  }
+}
