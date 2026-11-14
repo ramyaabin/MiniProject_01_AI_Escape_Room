@@ -8,7 +8,7 @@
 | 2 | Version 2 with structured state and validation | `version_2/` | Done. Played live and without a key. |
 | 3 | Architecture diagram for each version | `docs/architecture_v1.md`, `docs/architecture_v2.md` (+ PNGs in `docs/images/`) | Done |
 | 4 | At least five test cases V1 vs V2 | `docs/testing.md` (8 scenarios), transcripts in `docs/test_results/` | Done |
-| 5 | Report (2-3 pages) | `docs/development_report.pdf` (3 pages A4), source `docs/development_report.md` | Done |
+| 5 | Report (2-3 pages) | Submitted separately (kept out of the public repository) | Done |
 
 ## Requirements check
 
@@ -28,8 +28,8 @@
 ## Before you submit
 
 1. Read the report and adjust the wording so it sounds like you. Add your name and student ID
-   on the first line of `docs/development_report.md` (there is room: page 3 is half full).
-2. If you edit the Markdown, ask Claude to rebuild `docs/development_report.pdf`, or open the
+   on the first line of the report Markdown (there is room: page 3 is half full).
+2. If you edit the Markdown, rebuild the PDF, or open the
    Markdown in VS Code (Ctrl+Shift+V) and print it to PDF.
 3. Run the app once yourself and practise the demo script in `docs/study_guide.md`.
 

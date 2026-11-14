@@ -24,3 +24,7 @@ htmlcov/
 
 # Assignment brief (course material, not redistributed)
 MiniProject_01_EscapeRoom.pdf
+
+# Project report (submitted separately, not published)
+docs/development_report.md
+docs/development_report.pdf
