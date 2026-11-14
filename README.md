@@ -240,7 +240,7 @@ All screenshots are of the actual running application.
 
 - [docs/architecture_v1.md](docs/architecture_v1.md), [docs/architecture_v2.md](docs/architecture_v2.md): architecture diagrams
 - [docs/testing.md](docs/testing.md): test cases, Version 1 vs Version 2 results
-- [docs/development_report.md](docs/development_report.md): project report
+- [docs/development_report.pdf](docs/development_report.pdf): project report, 3 pages A4 (source: [development_report.md](docs/development_report.md))
 - [docs/study_guide.md](docs/study_guide.md): component explanations, viva questions, demo script
 
 ## Limitations and future improvements
